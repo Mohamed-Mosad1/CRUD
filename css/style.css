@@ -1,0 +1,13 @@
+body {
+  background-color: black;
+}
+textarea {
+  resize: none;
+  height: 120px;
+}
+.nameRule {
+  color: red;
+}
+
+
+
