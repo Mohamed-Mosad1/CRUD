@@ -106,7 +106,7 @@ function clearForm() {
   productDesc.value = "";
 }
 function validationName() {
-  var regex = /^[A-Z][a-z]{3,10}$/gm;
+  var regex = /^[A-Z][a-z]{3,8}\s*([A-Za-z]{3,8})?$/gm;
   var cartona = `The first letter must be capitalized`;
   if (regex.test(productName.value)) {
     nameRules.innerHTML = null;
@@ -144,7 +144,7 @@ function validationModel() {
   }
 }
 function validationDesc() {
-  var regex = /^.{250,}$/gm;
+  var regex = /^(.|\s*){250,}$/gm;
   var cartona = `at least 250 characters`;
   if (regex.test(productDesc.value)) {
     descRules.innerHTML = null;
