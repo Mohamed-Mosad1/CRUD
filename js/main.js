@@ -16,9 +16,12 @@ if (localStorage.getItem("product") != null) {
   displayData();
 }
 function addProduct() {
-  if (validationName() &&
+  if (
+    validationName() &&
     validationPrice() &&
-    validationModel() || validationDesc()) {
+    validationModel() &&
+    validationDesc()
+  ) {
     var product = {
       name: productName.value,
       price: productPrice.value,
@@ -106,9 +109,9 @@ function clearForm() {
   productDesc.value = "";
 }
 function validationName() {
-  var regex = /^[A-Z][a-z]{3,8}\s*([A-Za-z]{3,8})?$/gm;
+  var regexName = /^[A-Z][A-Za-z]{3,8}\s*([A-Za-z]{3,8})?$/gm;
   var cartona = `The first letter must be capitalized`;
-  if (regex.test(productName.value)) {
+  if (regexName.test(productName.value)) {
     nameRules.innerHTML = null;
     return true;
   } else {
@@ -129,24 +132,26 @@ function validationPrice() {
 }
 function validationModel() {
   var cartona = `Choose Between (tv, mobile and laptop)`;
-  var temp = modelRules.innerHTML = null;
   var lowerCaseValue = productModel.value.toLowerCase();
   switch (lowerCaseValue) {
     case "tv":
-      return temp;
+      modelRules.innerHTML = null;
+      return true;
     case "mobile":
-      return temp;
+      modelRules.innerHTML = null;
+      return true;
     case "laptop":
-      return temp;
+      modelRules.innerHTML = null;
+      return true;
     default:
       modelRules.innerHTML = cartona;
       break;
   }
 }
 function validationDesc() {
-  var regex = /^(.|\s*){250,}$/gm;
+  var regexDesc = /^[\s\S]{10,}$/gm;
   var cartona = `at least 250 characters`;
-  if (regex.test(productDesc.value)) {
+  if (regexDesc.test(productDesc.value)) {
     descRules.innerHTML = null;
     return true;
   } else {
