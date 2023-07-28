@@ -149,7 +149,7 @@ function validationModel() {
   }
 }
 function validationDesc() {
-  var regexDesc = /^[\s\S]{10,}$/gm;
+  var regexDesc = /^[\s\S]{250,}$/gm;
   var cartona = `at least 250 characters`;
   if (regexDesc.test(productDesc.value)) {
     descRules.innerHTML = null;
