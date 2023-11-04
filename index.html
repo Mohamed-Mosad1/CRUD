@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Test</title>
+  <meta name="description" content="CRUD">
+  <title>CRUD</title>
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -15,41 +16,41 @@
     <div class="row">
       <div class="col-md-10 m-auto">
         <div class="mx-auto py-4">
-          <div class="form-group mb-3">
-            <label for="productName" class="mb-2">Product Name:</label>
-            <input oninput="validationName()" type="text" class="form-control" id="productName"
-              placeholder="Enter Name">
-            <p id="nameRule" class="nameRule"></p>
-          </div>
-          <div class="form-group mb-3">
-            <label for="productPrice" class="mb-2">Product Price:</label>
-            <input oninput="validationPrice()" type="number" class="form-control" id="productPrice"
-              placeholder="Enter Price">
-            <p id="priceRule" class="nameRule"></p>
-          </div>
-          <div class="form-group mb-3">
-            <label for="productModel" class="mb-2">Product Model:</label>
-            <input oninput="validationModel()" type="text" class="form-control" id="productModel"
-              placeholder="Enter Model">
-            <p id="modelRule" class="nameRule"></p>
-          </div>
-          <div class="form-group mb-3">
-            <label for="productDesc" class="mb-2">Product Description:</label>
-            <textarea oninput="validationDesc()" name="productDesc" id="productDesc" class="form-control"></textarea>
-            <p id="descRule" class="nameRule"></p>
-          </div>
-          <div class="boton">
-            <button onclick="addProduct()" class="btn btn-primary" id="addBtn">Add Product</button>
-            <button onclick="updateData()" class="btn btn-warning d-none" id="updateBtn">Update Product</button>
+          <div id="productForm">
+            <div class="form-group mb-3">
+              <label for="productName" class="mb-2">Product Name:</label>
+              <input type="text" class="form-control" id="productName" name="productName" placeholder="Enter Name"
+                required>
+              <p id="nameRule" class="nameRule"></p>
+            </div>
+            <div class="form-group mb-3">
+              <label for="productPrice" class="mb-2">Product Price:</label>
+              <input type="number" class="form-control" id="productPrice" name="productPrice" placeholder="Enter Price"
+                required>
+              <p id="priceRule" class="nameRule"></p>
+            </div>
+            <div class="form-group mb-3">
+              <label for="productModel" class="mb-2">Product Model:</label>
+              <input type="text" class="form-control" id="productModel" name="productModel" placeholder="Enter Model"
+                required>
+              <p id="modelRule" class="nameRule"></p>
+            </div>
+            <div class="form-group mb-3">
+              <label for="productDesc" class="mb-2">Product Description:</label>
+              <textarea name="productDesc" id="productDesc" class="form-control" required></textarea>
+              <p id="chars" class="nameRule">At least <span id="chars2">100</span> Characters</p>
+            </div>
+            <div class="boton">
+              <button type="submit" class="btn btn-primary" id="addBtn">Add Product</button>
+              <button type="button" class="btn btn-warning d-none" id="updateBtn">Update Product</button>
+            </div>
           </div>
         </div>
       </div>
+      <input id="searchInput" type="text" class="form-control my-3 w-75 mx-auto" placeholder="Search">
     </div>
-
-    <input id="searchInput" oninput="searchProduct()" type="text" class="form-control my-3 w-75 mx-auto"
-      placeholder="search">
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12 mt-4">
         <table class="table text-center">
           <thead>
             <tr>
@@ -61,6 +62,7 @@
             </tr>
           </thead>
           <tbody id="display">
+            <!-- Products will be displayed here -->
           </tbody>
         </table>
       </div>
@@ -68,7 +70,8 @@
   </div>
 
 
-
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/jquery code min.js"></script>
   <script src="js/main.js"></script>
 </body>
 

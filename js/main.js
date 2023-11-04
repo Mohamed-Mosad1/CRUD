@@ -1,28 +1,23 @@
-var productName = document.getElementById("productName");
-var productPrice = document.getElementById("productPrice");
-var productModel = document.getElementById("productModel");
-var productDesc = document.getElementById("productDesc");
-var searchInput = document.getElementById("searchInput");
-var addBtn = document.getElementById("addBtn");
-var updateBtn = document.getElementById("updateBtn");
-var nameRules = document.getElementById("nameRule");
-var priceRules = document.getElementById("priceRule");
-var modelRules = document.getElementById("modelRule");
-var descRules = document.getElementById("descRule");
-var indexUpdate = 0;
-var productList = [];
+const productName = document.getElementById("productName");
+const productPrice = document.getElementById("productPrice");
+const productModel = document.getElementById("productModel");
+const productDesc = document.getElementById("productDesc");
+const searchInput = document.getElementById("searchInput");
+const addBtn = document.getElementById("addBtn");
+const updateBtn = document.getElementById("updateBtn");
+const nameRules = document.getElementById("nameRule");
+const priceRules = document.getElementById("priceRule");
+const modelRules = document.getElementById("modelRule");
+
+let indexUpdate = 0;
+let productList = [];
 if (localStorage.getItem("product") != null) {
   productList = JSON.parse(localStorage.getItem("product"));
   displayData();
 }
 function addProduct() {
-  if (
-    validationName() &&
-    validationPrice() &&
-    validationModel() &&
-    validationDesc()
-  ) {
-    var product = {
+  if (validationName() && validationPrice() && validationModel()) {
+    let product = {
       name: productName.value,
       price: productPrice.value,
       model: productModel.value,
@@ -37,13 +32,13 @@ function addProduct() {
   }
 }
 function displayData() {
-  var cartona = ``;
-  for (var i = 0; i < productList.length; i++) {
+  let cartona = ``;
+  for (let i = 0; i < productList.length; i++) {
     cartona += `<tr>
         <td>${productList[i].name}</td>
         <td>${productList[i].price}</td>
         <td>${productList[i].model}</td>
-        <td><p>${productList[i].desc}</p></td>
+        <td class="text-break">${productList[i].desc}</td>
         <td>
           <button class="btn btn-warning btn-sm" onclick="setData(${i})">Update</button>
           <button onclick="deleteProduct(${i})" class="btn btn-danger btn-sm">Delete</button>
@@ -58,8 +53,8 @@ function deleteProduct(indexNum) {
   displayData();
 }
 function searchProduct() {
-  var cartona = ``;
-  for (var i = 0; i < productList.length; i++) {
+  let cartona = ``;
+  for (let i = 0; i < productList.length; i++) {
     if (
       productList[i].name
         .toLowerCase()
@@ -69,7 +64,7 @@ function searchProduct() {
         <td>${productList[i].name}</td>
         <td>${productList[i].price}</td>
         <td>${productList[i].model}</td>
-        <td>${productList[i].desc}</td>
+        <td class="text-break">${productList[i].desc}</td>
         <td>
         <button onclick="setData(${i})" class="btn btn-warning btn-sm">Update</button>
         <button onclick="deleteProduct(${i})" class="btn btn-danger btn-sm">Delete</button>
@@ -89,7 +84,7 @@ function setData(index) {
   addBtn.classList.add("d-none");
 }
 function updateData() {
-  var products = {
+  let products = {
     name: productName.value,
     price: productPrice.value,
     model: productModel.value,
@@ -101,6 +96,7 @@ function updateData() {
   updateBtn.classList.add("d-none");
   addBtn.classList.remove("d-none");
   clearForm();
+  $("#chars").addClass("d-none");
 }
 function clearForm() {
   productName.value = "";
@@ -109,8 +105,8 @@ function clearForm() {
   productDesc.value = "";
 }
 function validationName() {
-  var regexName = /^[A-Z][A-Za-z]{3,8}\s*([A-Za-z]{3,8})?$/gm;
-  var cartona = `The first letter must be capitalized`;
+  let regexName = /^[A-Z][A-Za-z]{3,8}\s*([A-Za-z]{3,8})?$/gm;
+  let cartona = `The first letter must be capitalized`;
   if (regexName.test(productName.value)) {
     nameRules.innerHTML = null;
     return true;
@@ -121,9 +117,9 @@ function validationName() {
 }
 
 function validationPrice() {
-  var cartona = `Put Price Between 1000 to 10000`;
+  let cartona = `Put Price Between 1000 to 10000`;
   if (productPrice.value >= 1000 && productPrice.value <= 10000) {
-    priceRules.innerHTML = null;
+    priceRules.innerHTML = "";
     return true;
   } else {
     priceRules.innerHTML = cartona;
@@ -131,31 +127,41 @@ function validationPrice() {
   }
 }
 function validationModel() {
-  var cartona = `Choose Between (tv, mobile and laptop)`;
-  var lowerCaseValue = productModel.value.toLowerCase();
+  let cartona = `Choose Between (tv, mobile and laptop)`;
+  let lowerCaseValue = productModel.value.toLowerCase();
   switch (lowerCaseValue) {
     case "tv":
-      modelRules.innerHTML = null;
+      modelRules.innerHTML = "";
       return true;
     case "mobile":
-      modelRules.innerHTML = null;
+      modelRules.innerHTML = "";
       return true;
     case "laptop":
-      modelRules.innerHTML = null;
+      modelRules.innerHTML = "";
       return true;
     default:
       modelRules.innerHTML = cartona;
       break;
   }
 }
-function validationDesc() {
-  var regexDesc = /^[\s\S]{250,}$/gm;
-  var cartona = `at least 250 characters`;
-  if (regexDesc.test(productDesc.value)) {
-    descRules.innerHTML = null;
+
+$("textarea").keyup(function () {
+  let regexDesc = /^[\s\S]{100,}$/gm;
+  let myLength = $(this).val().length;
+  let myText = $(this).val();
+  $("#chars2").text(100 - myLength);
+  if (regexDesc.test(myText)) {
+    $("#chars").addClass("d-none");
     return true;
   } else {
-    descRules.innerHTML = cartona;
+    $("#chars").removeClass("d-none");
     return false;
   }
-}
+});
+
+productName.addEventListener("input", validationName);
+productPrice.addEventListener("input", validationPrice);
+productModel.addEventListener("input", validationModel);
+searchInput.addEventListener("input", searchProduct);
+addBtn.addEventListener("click", addProduct);
+updateBtn.addEventListener("click", updateData);
